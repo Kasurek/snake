@@ -1,0 +1,3 @@
+# Snake
+
+Projekt gry snake
