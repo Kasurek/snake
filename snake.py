@@ -77,15 +77,26 @@ class Snake:
         self.snake.insert(0, self.head)
 
         # 3. check if game ends
-
+        game_over = False
+        if self._is_collision(self):
+            game_over = True
+            return game_over, self.score
         # 4. place new food or move snake
-
+        
         # 5. update ui and clock
         self._update_ui()
         self.clock.tick(SPEED)
         # 6. return game over and score
-        game_over = False
         return game_over, self.score
+    def _is_collision(self):
+        # checking if the snake hits the boundary
+        if self.head.x > self.w - BODY_SIZE or self.head.x < 0 or self.head.y > self.h - BODY_SIZE or self.head.y < 0:
+            return True
+        # checking if the snake hits itself
+        if self.head in self.snake[1:]:
+            return True
+        
+        return False
 
     def _update_ui(self):
         self.display.fill(BLACK)
@@ -108,10 +119,12 @@ class Snake:
             x += BODY_SIZE
         elif direction == Direction.LEFT:
             x -= BODY_SIZE
-        elif direction == Direction.UP:
-            y += BODY_SIZE
         elif direction == Direction.DOWN:
+            y += BODY_SIZE
+        elif direction == Direction.UP:
             y -= BODY_SIZE
+
+        self.head = Point(x, y)
 
 
 if __name__ == '__main__':
