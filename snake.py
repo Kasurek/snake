@@ -5,6 +5,9 @@ from collections import namedtuple
 
 pg.init()
 
+# Setting up font
+font = pg.font.SysFont('arial', 25)
+
 class Direction(Enum):
     RIGHT = 1
     LEFT = 2
@@ -13,7 +16,15 @@ class Direction(Enum):
 
 Point = namedtuple('Point', 'x, y')
 
+#Colors
+WHITE = (255, 255, 255)
+RED = (200, 0, 0)
+BLUE1 = (0, 0, 255)
+BLUE2 = (0, 100, 255)
+BLACK = (0, 0, 0)
+
 BODY_SIZE = 20
+SPEED = 40
 class Snake:
 
     def __init__(self,w=640,h=480):
@@ -55,10 +66,25 @@ class Snake:
         # 4. place new food or move snake
 
         # 5. update ui and clock
-
+        self._update_ui()
+        self.clock.tick(SPEED)
         # 6. return game over and score
         game_over = False
         return game_over, self.score
+
+    def _update_ui(self):
+        self.display.fill(BLACK)
+
+        #Draw the snake
+        for p in self.snake:
+            pg.draw.rect(self.display, BLUE1, pg.Rect(p.x, p.y, BODY_SIZE, BODY_SIZE))
+            pg.draw.rect(self.display, BLUE2, pg.Rect(p.x + 4, p.y + 4, 12, 12))
+
+        pg.draw.rect(self.display, RED, pg.Rect(self.food.x, self.food.y, BODY_SIZE, BODY_SIZE))
+
+        text = font.render("Score: " + str(self.score), True, WHITE)
+        self.display.blit(text, [0, 0])
+        pg.display.flip()
 
 
 if __name__ == '__main__':
