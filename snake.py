@@ -58,8 +58,23 @@ class Snake:
 
     def play_step(self):
         # 1. get user input
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                quit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_LEFT:
+                    self.direction = Direction.LEFT
+                elif event.key == pg.K_RIGHT:
+                    self.direction = Direction.RIGHT
+                elif event.key == pg.K_UP:
+                    self.direction = Direction.UP
+                elif event.key == pg.K_DOWN:
+                    self.direction = Direction.DOWN
 
         # 2. move snake
+        self._move(self.direction) #update the head
+        self.snake.insert(0, self.head)
 
         # 3. check if game ends
 
@@ -85,6 +100,18 @@ class Snake:
         text = font.render("Score: " + str(self.score), True, WHITE)
         self.display.blit(text, [0, 0])
         pg.display.flip()
+
+    def _move(self, direction):
+        x = self.head.x
+        y = self.head.y
+        if direction == Direction.RIGHT:
+            x += BODY_SIZE
+        elif direction == Direction.LEFT:
+            x -= BODY_SIZE
+        elif direction == Direction.UP:
+            y += BODY_SIZE
+        elif direction == Direction.DOWN:
+            y -= BODY_SIZE
 
 
 if __name__ == '__main__':
