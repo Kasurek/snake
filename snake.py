@@ -23,6 +23,7 @@ BLUE1 = (0, 0, 255)
 BLUE2 = (0, 100, 255)
 BLACK = (0, 0, 0)
 
+
 BODY_SIZE = 20
 SPEED = 10
 class Snake:
@@ -107,8 +108,9 @@ class Snake:
 
         #Draw the snake
         for p in self.snake:
-            pg.draw.rect(self.display, BLUE1, pg.Rect(p.x, p.y, BODY_SIZE, BODY_SIZE))
-            pg.draw.rect(self.display, BLUE2, pg.Rect(p.x + 4, p.y + 4, 12, 12))
+            rncolor = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+            pg.draw.rect(self.display, rncolor, pg.Rect(p.x, p.y, BODY_SIZE, BODY_SIZE))
+            pg.draw.rect(self.display, rncolor, pg.Rect(p.x + 4, p.y + 4, 12, 12))
 
         pg.draw.rect(self.display, RED, pg.Rect(self.food.x, self.food.y, BODY_SIZE, BODY_SIZE))
 
