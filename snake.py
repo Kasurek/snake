@@ -108,9 +108,10 @@ class Snake:
 
         #Draw the snake
         for p in self.snake:
-            rncolor = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
-            pg.draw.rect(self.display, rncolor, pg.Rect(p.x, p.y, BODY_SIZE, BODY_SIZE))
-            pg.draw.rect(self.display, rncolor, pg.Rect(p.x + 4, p.y + 4, 12, 12))
+            rncolor1 = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+            rncolor2 = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+            pg.draw.rect(self.display, rncolor1, pg.Rect(p.x, p.y, BODY_SIZE, BODY_SIZE))
+            pg.draw.rect(self.display, rncolor2, pg.Rect(p.x + 4, p.y + 4, 12, 12))
 
         pg.draw.rect(self.display, RED, pg.Rect(self.food.x, self.food.y, BODY_SIZE, BODY_SIZE))
 
