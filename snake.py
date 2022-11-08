@@ -58,7 +58,7 @@ class Snake:
 
 
     def play_step(self):
-        # 1. get user input
+        # get user input
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
@@ -73,30 +73,38 @@ class Snake:
                 elif event.key == pg.K_DOWN:
                     self.direction = Direction.DOWN
 
-        # 2. move snake
+        # move snake
         self._move(self.direction) #update the head
         self.snake.insert(0, self.head)
 
-        # 3. check if game ends
+        # check if boundary is hit
+        if self._boundary_hit():
+            game_over = True
+            return game_over, self.score
+        # check if game ends
         game_over = False
         if self._is_collision():
             game_over = True
             return game_over, self.score
-        # 4. place new food or move snake
+        # place new food or move snake
         if self.head == self.food:
             self.score += 1
             self._place_food()
         else:
             self.snake.pop()
-        # 5. update ui and clock
+        # update ui and clock
         self._update_ui()
         self.clock.tick(SPEED)
-        # 6. return game over and score
+        # return game over and score
         return game_over, self.score
-    def _is_collision(self):
+
+        # making the snake jump to the other side of the screen
+    def _boundary_hit(self):
         # checking if the snake hits the boundary
         if self.head.x > self.w - BODY_SIZE or self.head.x < 0 or self.head.y > self.h - BODY_SIZE or self.head.y < 0:
             return True
+
+    def _is_collision(self):
         # checking if the snake hits itself
         if self.head in self.snake[1:]:
             return True
